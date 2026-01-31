@@ -12,6 +12,7 @@
           lib = nixpkgs.lib;
 	  system = "x86_64-linux";
 	  pkgs = nixpkgs.legacyPackages.${system};
+          dotfilesDir = toString self;
         in {
         nixosConfigurations = {
           gary = lib.nixosSystem {
@@ -22,7 +23,10 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.extraSpecialArgs = { hostname = "gary"; };
+                home-manager.extraSpecialArgs = { 
+                  hostname = "gary";
+                  dotfilesDir = dotfilesDir;
+                };
                 home-manager.users.aristide = import ./home.nix;
               }
             ];
@@ -35,7 +39,10 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.extraSpecialArgs = { hostname = "zola"; };
+                home-manager.extraSpecialArgs = { 
+                  hostname = "zola";
+                  dotfilesDir = dotfilesDir;
+                };
                 home-manager.users.aristide = import ./home.nix;
               }
             ];
@@ -48,7 +55,10 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.extraSpecialArgs = { hostname = "exupery"; };
+                home-manager.extraSpecialArgs = { 
+                  hostname = "exupery";
+                  dotfilesDir = dotfilesDir;
+                };
                 home-manager.users.aristide = import ./home.nix;
               }
             ];
@@ -57,6 +67,7 @@
 		homeConfigurations = {
 		  aristide = home-manager.lib.homeManagerConfiguration {
 		    inherit pkgs;
+		    extraSpecialArgs = { dotfilesDir = dotfilesDir; };
 		    modules = [ ./home.nix ];
 		  };
     };

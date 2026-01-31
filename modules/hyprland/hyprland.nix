@@ -2,10 +2,11 @@
 # The wallpaper (swww) is being managed and toggled by the ricetoggle.sh script
 
 #--------------------------------------------------------------
-{ config, pkgs, lib, hostname ? "", ... }:
+{ config, pkgs, lib, hostname ? "", dotfilesDir ? "", ... }:
 
 let
   hasNvidia = hostname == "zola";
+  dotfilesPath = if dotfilesDir != "" then dotfilesDir else "${config.home.homeDirectory}/.dotfiles";
 in
 
 {
@@ -16,11 +17,11 @@ in
     extraConfig = ''
       # █▀▀ ▀▄▀ █▀▀ █▀▀
       # ██▄ █░█ ██▄ █▄▄
-      exec-once = bash -c "${config.home.homeDirectory}/.dotfiles/home/scripts/lock.sh"
-      exec-once = bash -c "${config.home.homeDirectory}/.dotfiles/home/scripts/winsound.sh"
-      exec-once = bash -c "sleep 0.9 && hyprpaper"
-      exec-once = bash -c "swww init"
-      exec-once = bash -c "swww img ~/.dotfiles/home/gias.png"
+      exec-once = bash -c "if [ -f ${dotfilesPath}/home/scripts/lock.sh ]; then ${dotfilesPath}/home/scripts/lock.sh; fi"
+      exec-once = bash -c "if [ -f ${dotfilesPath}/home/scripts/winsound.sh ]; then ${dotfilesPath}/home/scripts/winsound.sh; fi"
+      exec-once = hyprpaper
+      exec-once = swww init
+      exec-once = bash -c "swww img ${dotfilesPath}/home/gias.png 2>/dev/null || true"
       exec-once = waybar
       exec-once = dunst
       exec-once = pypr
@@ -127,8 +128,8 @@ in
       bind = SUPER, B, exec, app.zen_browser.zen
       bind = SUPER, S, exec, com.spotify.Client
       bind = SUPER, escape, exec, shutdown now
-      bind = SUPER, L, exec, ${config.home.homeDirectory}/.dotfiles/home/scripts/lock.sh
-      bind = SUPER, 0,  exec, ${config.home.homeDirectory}/.dotfiles/home/scripts/ricetoggle.sh
+      bind = SUPER, L, exec, ${dotfilesPath}/home/scripts/lock.sh
+      bind = SUPER, 0,  exec, ${dotfilesPath}/home/scripts/ricetoggle.sh
       bind = SUPER, C,  exec, bongocat --config ~/.config/wayland-bongocat/bongocat.conf 
       bind = SUPER, U, exec, dbus-run-session -- steam-run $(which unityhub)
       bind = SUPER, F, fullscreen,
@@ -257,7 +258,7 @@ in
 
     background {
         monitor = 
-        path = ${config.home.homeDirectory}/.dotfiles/home/emoergo.jpg
+        path = ${dotfilesPath}/home/emoergo.jpg
         color = rgba(0, 0, 0, 0) 
         blur_passes = 0 
         noise = 2.0 
@@ -325,7 +326,7 @@ in
 
     image {
         monitor =
-        path = ${config.home.homeDirectory}/.dotfiles/home/mongrel.jpg
+        path = ${dotfilesPath}/home/mongrel.jpg
         size = 200
         rounding = 150
         border_size = 1

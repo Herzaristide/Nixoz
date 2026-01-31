@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, config, dotfilesDir ? "", ... }:
 
-{
+let
+  dotfilesPath = if dotfilesDir != "" then dotfilesDir else "${config.home.homeDirectory}/.dotfiles";
+in {
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
@@ -66,7 +68,7 @@ inputbar {
     spacing:                     10px;
     padding:                     100px 40px;
     background-color:            transparent;
-    background-image:            url("~/.dotfiles/home/lordmongrel.jpg", width);
+    background-image:            url("${dotfilesPath}/home/lordmongrel.jpg", width);
     text-color:                  @foreground;
     orientation:                 horizontal;
     children:                    [ "textbox-prompt-colon", "entry" ];

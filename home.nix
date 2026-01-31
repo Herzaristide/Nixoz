@@ -1,9 +1,11 @@
-{ config, pkgs, lib, hostname ? "", ... }:
+{ config, pkgs, lib, hostname ? "", dotfilesDir ? "", ... }:
 
 let
   # Get hostname from extraSpecialArgs, fallback to environment variable or default
   currentHostname = if hostname != "" then hostname else (builtins.getEnv "HOSTNAME");
   isDesktop = currentHostname != "exupery";
+  # Use dotfilesDir if provided, otherwise fallback to ~/.dotfiles
+  dotfilesPath = if dotfilesDir != "" then dotfilesDir else "${config.home.homeDirectory}/.dotfiles";
 in
 
 {
@@ -139,9 +141,9 @@ in
   programs.fish.enable = true;
 
   xdg.configFile."nvim" = {
-  source = config.lib.file.mkOutOfStoreSymlink "/home/aristide/.dotfiles/modules/nvim";
-  recursive = true;
-};
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/modules/nvim";
+    recursive = true;
+  };
 
   nixpkgs.config.allowUnfree = true;
 

@@ -1,8 +1,13 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, dotfilesDir ? "", ... }:
+
+let
+  dotfilesPath = if dotfilesDir != "" then dotfilesDir else "${config.home.homeDirectory}/.dotfiles";
+in
 
 {
   programs.waybar = {
     enable = true;
+    style = "${config.xdg.configHome}/waybar/style1.css";
     settings = {
       mainBar = {
         margin = "5 20 0 20";
@@ -40,7 +45,7 @@
           format = "  {}";
           interval = 5;
           on-click = "flatpak run com.spotify.client";
-          exec = "~/.dotfiles/home/scripts/spotify.sh";
+          exec = "${dotfilesPath}/home/scripts/spotify.sh";
         };
 
         clock = {
@@ -52,7 +57,7 @@
           "format-wifi" = "󰤨  {essid} ({signalStrength}%)";
           "format-ethernet" = "󰈁 Ethernet";
           "format-disconnected" = "󰤭 Disconnected";
-          "on-click" = "~/.dotfiles/home/scripts/nmtui.sh";
+          "on-click" = "${dotfilesPath}/home/scripts/nmtui.sh";
         };
 
         pulseaudio = {
@@ -94,9 +99,9 @@
         };
 
         "custom/recorder" = {
-          exec = "~/.dotfiles/home/scripts/record-status.sh";
+          exec = "${dotfilesPath}/home/scripts/record-status.sh";
           interval = 1;
-          "on-click" = "~/.dotfiles/home/scripts/toggle-record.sh";
+          "on-click" = "${dotfilesPath}/home/scripts/toggle-record.sh";
           "return-type" = "json";
         };
       };

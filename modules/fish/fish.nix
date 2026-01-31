@@ -1,4 +1,8 @@
-{ config, pkgs, ...}: {
+{ config, pkgs, dotfilesDir ? "", ... }:
+
+let
+  dotfilesPath = if dotfilesDir != "" then dotfilesDir else "${config.home.homeDirectory}/.dotfiles";
+in {
 
 ######################### fish config #########################################
 
@@ -35,12 +39,12 @@
 		gs = "git status";
 		gm = "git commit -m ";
 		gp = "git push";
-		rebs = "sudo nixos-rebuild switch --flake ~/.dotfiles";
-		reb = "sudo nixos-rebuild test --flake ~/.dotfiles";
-		conf = "nvim ~/.dotfiles/configuration.nix";
-		hom = "nvim ~/.dotfiles/home.nix";
-		homs = "home-manager switch --flake ~/.dotfiles";
-		homb = "home-manager build --flake ~/.dotfiles";
+		rebs = "sudo nixos-rebuild switch --flake ${dotfilesPath}";
+		reb = "sudo nixos-rebuild test --flake ${dotfilesPath}";
+		conf = "nvim ${dotfilesPath}/configuration.nix";
+		hom = "nvim ${dotfilesPath}/home.nix";
+		homs = "home-manager switch --flake ${dotfilesPath}";
+		homb = "home-manager build --flake ${dotfilesPath}";
 		shell = "nix-shell";
 		ais = "sudo systemctl stop ollama.service";
 		ai = "sudo systemctl start ollama.service";

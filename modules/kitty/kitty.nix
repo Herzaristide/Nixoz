@@ -1,11 +1,13 @@
-{ config, pkgs, ... }:
+{ config, pkgs, dotfilesDir ? "", ... }:
 
-{
+let
+  dotfilesPath = if dotfilesDir != "" then dotfilesDir else "${config.home.homeDirectory}/.dotfiles";
+in {
   xdg.configFile."kitty/kitty.conf".text = ''
     bold_font auto
     bold_italic_font auto
     allow_remote_control yes
-    background_image ${config.home.homeDirectory}/.dotfiles/home/emoergo.png
+    background_image ${dotfilesPath}/home/emoergo.png
     background_image_layout scaled
     background_opacity 1.0
 
