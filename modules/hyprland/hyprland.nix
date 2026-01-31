@@ -2,10 +2,9 @@
 # The wallpaper (swww) is being managed and toggled by the ricetoggle.sh script
 
 #--------------------------------------------------------------
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, hostname ? "", ... }:
 
 let
-  hostname = config.home.hostname or "";
   hasNvidia = hostname == "zola";
 in
 

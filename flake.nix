@@ -22,10 +22,8 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.users.aristide = {
-                  imports = [ ./home.nix ];
-                  home.hostname = "gary";
-                };
+                home-manager.extraSpecialArgs = { hostname = "gary"; };
+                home-manager.users.aristide = import ./home.nix;
               }
             ];
           };
@@ -37,10 +35,8 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.users.aristide = {
-                  imports = [ ./home.nix ];
-                  home.hostname = "zola";
-                };
+                home-manager.extraSpecialArgs = { hostname = "zola"; };
+                home-manager.users.aristide = import ./home.nix;
               }
             ];
           };
@@ -52,10 +48,8 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.users.aristide = {
-                  imports = [ ./home.nix ];
-                  home.hostname = "exupery";
-                };
+                home-manager.extraSpecialArgs = { hostname = "exupery"; };
+                home-manager.users.aristide = import ./home.nix;
               }
             ];
           };

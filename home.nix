@@ -1,18 +1,12 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, hostname ? "", ... }:
 
 let
-  # Get hostname from option, fallback to environment variable or default
-  hostname = if config.home.hostname != "" then config.home.hostname else (builtins.getEnv "HOSTNAME");
-  isDesktop = hostname != "exupery";
+  # Get hostname from extraSpecialArgs, fallback to environment variable or default
+  currentHostname = if hostname != "" then hostname else (builtins.getEnv "HOSTNAME");
+  isDesktop = currentHostname != "exupery";
 in
 
 {
-  options.home.hostname = lib.mkOption {
-    type = lib.types.str;
-    default = "";
-    description = "System hostname for conditional configuration";
-  };
-
   home.username = "aristide";
   home.homeDirectory = "/home/aristide";
   home.stateVersion = "25.05"; 
