@@ -27,6 +27,9 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  # Console keyboard layout (for TTY)
+  console.keyMap = "fr";
+
   # User configuration
   programs.fish.enable = true;
   users.users.aristide = {
