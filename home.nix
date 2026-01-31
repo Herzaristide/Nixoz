@@ -61,7 +61,7 @@ in
     audacity
     vlc
     ani-cli
-    cursor-code
+    code-cursor
     libreoffice-qt6
     mpv
     kooha
