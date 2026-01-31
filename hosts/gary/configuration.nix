@@ -20,7 +20,7 @@
       efiSupport = true;
       device = "nodev";
       useOSProber = true;
-      theme = "/etc/grub-themes/lain";
+      # theme = "/etc/grub-themes/lain";  # Commented out - theme files not found
       gfxmodeEfi = "1920x1080";
     };
   };
