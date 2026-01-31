@@ -13,15 +13,11 @@
   boot.loader = {
     efi = {
       canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot/efi";  # Common EFI mount point
+      efiSysMountPoint = "/boot/efi";
     };
-    grub = {
+    systemd-boot = {
       enable = true;
-      efiSupport = true;
-      device = "nodev";
-      useOSProber = true;
-      # theme = "/etc/grub-themes/lain";  # Commented out - theme files not found
-      gfxmodeEfi = "1920x1080";
+      configurationLimit = 10;  # Keep last 10 generations
     };
   };
 
