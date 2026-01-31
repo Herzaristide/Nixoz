@@ -6,7 +6,7 @@
 
 let
   hasNvidia = hostname == "zola";
-  dotfilesPath = if dotfilesDir != "" then dotfilesDir else "${config.home.homeDirectory}/.dotfiles";
+  dotfilesPath = if dotfilesDir != "" then (builtins.toString dotfilesDir) else "${config.home.homeDirectory}/.dotfiles";
 in
 
 {
@@ -17,15 +17,14 @@ in
     extraConfig = ''
       # █▀▀ ▀▄▀ █▀▀ █▀▀
       # ██▄ █░█ ██▄ █▄▄
-      exec-once = bash -c "if [ -f ${dotfilesPath}/home/scripts/lock.sh ]; then ${dotfilesPath}/home/scripts/lock.sh; fi"
-      exec-once = bash -c "if [ -f ${dotfilesPath}/home/scripts/winsound.sh ]; then ${dotfilesPath}/home/scripts/winsound.sh; fi"
-      exec-once = hyprpaper
       exec-once = swww init
-      exec-once = bash -c "swww img ${dotfilesPath}/home/gias.png 2>/dev/null || true"
+      exec-once = bash -c "sleep 0.5 && if [ -f ${dotfilesPath}/home/gias.png ]; then swww img ${dotfilesPath}/home/gias.png; fi"
       exec-once = waybar
       exec-once = dunst
       exec-once = pypr
       exec-once = mpd
+      exec-once = bash -c "sleep 1 && if [ -f ${dotfilesPath}/home/scripts/lock.sh ]; then ${dotfilesPath}/home/scripts/lock.sh; fi"
+      exec-once = bash -c "sleep 1 && if [ -f ${dotfilesPath}/home/scripts/winsound.sh ]; then ${dotfilesPath}/home/scripts/winsound.sh; fi"
 
       # █▀▄▀█ █▀█ █▄░█ █ ▀█▀ █▀█ █▀█
       # █░▀░█ █▄█ █░▀█ █ ░█░ █▄█ █▀▄
